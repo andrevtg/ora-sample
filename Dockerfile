@@ -1,0 +1,20 @@
+#
+# Exemplo de conexão JDBC com Oracle cloud DB
+#
+FROM openjdk:12-alpine
+
+RUN mkdir -p /opt/lib /opt/app /opt/wallet
+
+COPY ./lib/ojdbc8.jar ./lib/ucp.jar ./lib/oraclepki.jar ./lib/osdt_core.jar ./lib/osdt_cert.jar /opt/lib/
+COPY ./ora-wallet/tnsnames.ora ./ora-wallet/ojdbc.properties ./ora-wallet/*.p12 ./ora-wallet/*.sso /opt/wallet/
+COPY ./src/*.java /opt/app/
+
+# build
+RUN javac -cp /opt/lib/ucp.jar:/opt/lib/ojdbc8.jar /opt/app/*.java
+
+ENV JAR_LIBS="/opt/lib/ojdbc8.jar:/opt/lib/ucp.jar" \
+    DB_URL="jdbc:oracle:thin:@vtgora_high?TNS_ADMIN=/opt/wallet" \
+    DB_USER="ADMIN" \
+    DB_PASSWORD="Vertigo1234A#_"
+
+CMD java -classpath "$JAR_LIBS:/opt/app" UCPSample "$DB_URL" "$DB_USER" "$DB_PASSWORD"
