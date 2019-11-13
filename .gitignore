@@ -1,0 +1,8 @@
+*.sso
+*.jks
+*.p12
+ojdbc.properties
+*.ora
+*.class
+*.jar
+

@@ -1,0 +1,10 @@
+# Properties for using Java KeyStore (JKS)
+#
+# ATENCAO: mudar password e copiar para a pasta da wallet
+#
+oracle.net.ssl_server_dn_match=true
+javax.net.ssl.trustStore==${TNS_ADMIN}/truststore.jks
+javax.net.ssl.trustStorePassword=password
+javax.net.ssl.keyStore==${TNS_ADMIN}/keystore.jks
+javax.net.ssl.keyStorePassword=password
+
